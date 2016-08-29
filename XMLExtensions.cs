@@ -16,6 +16,20 @@ namespace SNL.Deployments
     public static class Extensions
     {
         /// <summary>
+        /// Serializes an object for storage to database.
+        /// </summary>
+        /// <param name="serializableObject">Object to serialize</param>
+        /// <returns>Xml serialized object</returns>
+        public static string Serialize<T>(this T serializableObject) where T : class
+        {
+            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(T));
+            TextWriter writer = new StringWriter();
+            serializer.Serialize(writer, serializableObject);
+
+            return writer.ToString();
+        }
+        
+        /// <summary>
         /// Takes a FileStream object and reads all information therein to a
         /// IEnumerable of XElement.
         /// </summary>
